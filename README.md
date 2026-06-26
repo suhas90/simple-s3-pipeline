@@ -3,6 +3,17 @@
 A lightweight DevOps project that automates the deployment of a static HTML website to Amazon Web Services (AWS) S3 using **GitHub Actions**.
 
 Whenever a change is pushed to the `main` branch, the pipeline triggers, authenticates with AWS, and synchronizes the frontend files immediately.
+############## Folder and file layout
+devops-simple-s3-pipeline/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml       # GitHub Actions workflow file
+├── src/
+│   ├── error.html           # Page shown for 404 errors
+│   └── index.html           # Your main live website homepage
+├── .gitignore               # Files git should ignore
+└── README.md                # Project documentation
+
 
 ## 🏗️ Architecture Design
 `Local Git Push` ➔ `GitHub Actions Pipeline` ➔ `AWS S3 Bucket (Static Web Hosting)` ➔ `Live Web URL`
