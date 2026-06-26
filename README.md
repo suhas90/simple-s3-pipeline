@@ -40,6 +40,6 @@ git init
 git add .
 git commit -m "feat: initial commit of automated simple s3 pipeline website"
 git branch -M main
-git remote add origin https://github.com
+git remote add origin https://github.com/suhas90/simple-s3-pipeline.git
 git push -u origin main
 ```
