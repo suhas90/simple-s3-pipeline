@@ -24,7 +24,7 @@ devops-simple-s3-pipeline/
 * **Frontend Basics:** HTML5 / CSS3
 
 ## 📋 AWS Setup Prerequisites
-1. Create a Public S3 bucket on AWS named after your project (e.g., `my-unique-devops-bucket-2026`).
+1. Create a Public S3 bucket on AWS named after your project (e.g., `my-stastic-simple-bucket-2026-06`).
 2. Turn on **Static Website Hosting** in your S3 Bucket properties dashboard.
 3. Attach a bucket policy to allow public reads (`s3:GetObject`).
 
