@@ -1,25 +1,43 @@
-name: "Deploy Static Website to AWS S3"
+name: "CI/CD - Secure Static Website Pipeline"
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  deploy:
-    name: "Sync to S3 Bucket"
+  # STAGE 1: Code Validation and Linting
+  lint-and-validate:
+    name: "1. HTML Code Validation"
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
+      - name: Checkout Code Base
         uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials
+      - name: HTML5 Validation Check
+        uses: cyisfor/html5validator-action@v1.1.0
+        with:
+          root: ./src
+          css: false
+
+  # STAGE 2: Secure Cloud Sync (Runs ONLY if Stage 1 passes successfully)
+  deploy-to-s3:
+    name: "2. Sync to AWS S3 Bucket"
+    needs: lint-and-validate
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Base
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Engine Platform Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Deploy static files to S3
+      - name: Mirror Code Sandbox to S3 Bucket
         run: |
           aws s3 sync ./src s3://${{ secrets.AWS_S3_BUCKET_NAME }} --delete
